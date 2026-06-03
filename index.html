@@ -8,11 +8,19 @@
     <p>Fetching data from: <strong id="sheetName">Loading...</strong></p>
 
     <script>
-        // Replace with your actual Google Sheet ID
-        const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
-        const SHEET_NAME = 'Ovaledge Daily Governance Log';
+        const SHEET_ID = '1nn9tlhMO4W0c6ho-dlrsHGKjC6WS6HEZ-PEFSTQAEWg';
+        const API_KEY = 'YOUR_GOOGLE_SHEETS_API_KEY'; // Get this from Google Cloud Console
         
-        document.getElementById('sheetName').textContent = SHEET_NAME;
+        // Fetch sheet metadata
+        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}?key=${API_KEY}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('sheetName').textContent = data.properties.title;
+            })
+            .catch(err => {
+                document.getElementById('sheetName').textContent = 'Error loading sheet';
+                console.error(err);
+            });
     </script>
 </body>
 </html>
