@@ -4,7 +4,15 @@
     <title>Governance Dashboard</title>
 </head>
 <body>
-    <h1>Governance Dashboard</h1>
-    <p>Coming soon...</p>
+    <h1>Hello, World!</h1>
+    <p>Fetching data from: <strong id="sheetName">Loading...</strong></p>
+
+    <script>
+        // Replace with your actual Google Sheet ID
+        const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
+        const SHEET_NAME = 'Ovaledge Daily Governance Log';
+        
+        document.getElementById('sheetName').textContent = SHEET_NAME;
+    </script>
 </body>
 </html>
