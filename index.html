@@ -8,14 +8,10 @@
     <p>Fetching data from: <strong id="sheetName">Loading...</strong></p>
 
     <script>
-        const SHEET_ID = '1nn9tlhMO4W0c6ho-dlrsHGKjC6WS6HEZ-PEFSTQAEWg';
-        const API_KEY = 'YOUR_GOOGLE_SHEETS_API_KEY'; // Get this from Google Cloud Console
-        
-        // Fetch sheet metadata
-        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}?key=${API_KEY}`)
+        fetch('data.json')
             .then(res => res.json())
             .then(data => {
-                document.getElementById('sheetName').textContent = data.properties.title;
+                document.getElementById('sheetName').textContent = data.sheet_name;
             })
             .catch(err => {
                 document.getElementById('sheetName').textContent = 'Error loading sheet';

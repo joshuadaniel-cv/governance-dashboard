@@ -1,0 +1,31 @@
+name: Fetch Google Sheets Data
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Run every hour
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: pip install gspread oauth2client
+      
+      - name: Fetch sheet data
+        run: python scripts/fetch_sheets.py
+      
+      - name: Commit and push
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add data.json
+          git commit -m "Update sheet data" || echo "No changes"
+          git push
