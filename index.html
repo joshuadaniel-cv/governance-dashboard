@@ -310,7 +310,7 @@
     [data-theme="light"] .bcard::after { color: rgba(0,194,0,0.05); }
 
     /* Grid placement */
-    .bc-connector  { grid-column: span 4; }
+    .bc-connector  { grid-column: span 12; }
     .bc-quality    { grid-column: span 4; }
     .bc-lineage    { grid-column: span 4; }
     .bc-desc       { grid-column: span 6; }
@@ -415,25 +415,74 @@
     }
 
     /* ── Connector Panel ── */
-    .connector-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
+    /* ── Connector Table ── */
+    .conn-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+      table-layout: fixed;
     }
 
-    .connector-row {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.55rem 0.7rem;
+    .conn-table th {
+      text-align: left;
+      padding: 0.45rem 0.6rem;
       background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 0.78rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
     }
 
-    .connector-name { flex: 1; font-weight: 500; }
-    .connector-next { font-size: 0.68rem; color: var(--text-muted); margin-left: auto; white-space: nowrap; }
+    .conn-table td {
+      padding: 0.55rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .conn-table tr:last-child td { border-bottom: none; }
+
+    .conn-table tr.row-killed  { background: var(--err-bg); }
+    .conn-table tr.row-partial { background: var(--warn-bg); }
+    .conn-table tr.row-valerr  { background: var(--warn-bg); }
+
+    .conn-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 100px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .conn-chip .dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+    .conn-chip.ok   { background: var(--ok-bg);   color: var(--ok);   }
+    .conn-chip.warn { background: var(--warn-bg); color: var(--warn); }
+    .conn-chip.err  { background: var(--err-bg);  color: var(--err);  }
+
+    .conn-val-ok  { font-size: 0.68rem; color: var(--ok); }
+    .conn-val-err { font-size: 0.68rem; color: var(--err); }
+
+    .conn-caps { display: flex; gap: 0.2rem; }
+    .conn-cap {
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+    }
+    .conn-cap.lin { background: var(--blue-bg);   color: var(--blue-accent); }
+    .conn-cap.dq  { background: var(--ok-bg);     color: var(--ok); }
+    .conn-cap.da  { background: var(--warn-bg);   color: var(--warn); }
+
+    .conn-id { font-size: 0.68rem; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ── Progress bar ── */
     .progress-bar {
@@ -832,13 +881,43 @@
           </div>
           <div class="card-title">Crawls &amp; Connections</div>
         </div>
-        <span class="status-badge ok">
-          <span class="status-dot ok"></span> 8 / 9 OK
-        </span>
+        <div id="connector-summary-badges" style="display:flex;gap:0.4rem;flex-wrap:wrap;justify-content:flex-end;"></div>
       </div>
 
-      <div class="connector-list" id="connector-list">
-        <!-- Populated by JS -->
+      <!-- Loading / error state -->
+      <div id="connector-loading" style="display:flex;align-items:center;gap:0.5rem;padding:1rem 0;font-size:0.78rem;color:var(--text-muted);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="animation:spin 1s linear infinite;flex-shrink:0"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+        <span id="connector-loading-msg">Fetching from Google Sheets…</span>
+      </div>
+
+      <!-- Table (hidden until data loads) -->
+      <div id="connector-table-wrap" style="display:none;overflow-x:auto;margin-top:0.25rem;">
+        <table class="conn-table">
+          <colgroup>
+            <col style="width:5%">
+            <col style="width:22%">
+            <col style="width:10%">
+            <col style="width:10%">
+            <col style="width:16%">
+            <col style="width:15%">
+            <col style="width:11%">
+            <col style="width:11%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Connector</th>
+              <th>Status</th>
+              <th>Validation</th>
+              <th>Last Crawled</th>
+              <th>Owner</th>
+              <th>Steward</th>
+              <th>Caps</th>
+            </tr>
+          </thead>
+          <tbody id="connector-tbody"></tbody>
+        </table>
+        <div style="font-size:0.68rem;color:var(--text-dim);margin-top:0.5rem;text-align:right;" id="connector-source-note"></div>
       </div>
     </div>
 
@@ -1200,17 +1279,164 @@ const DATA = {
   changeCount: [11,   14,   16,   15,   18,   null],
 };
 
-const CONNECTORS = [
-  { name: 'Redshift DW',       status: 'ok',   last: '08:00',  next: '20:00' },
-  { name: 'Salesforce CRM',    status: 'ok',   last: '06:30',  next: '18:30' },
-  { name: 'HR SAP System',     status: 'warn', last: '04:00',  next: '16:00' },
-  { name: 'S3 Raw Zone',       status: 'ok',   last: '10:15',  next: '22:15' },
-  { name: 'SharePoint / Docs', status: 'ok',   last: '07:45',  next: '19:45' },
-  { name: 'Finance ERP',       status: 'ok',   last: '05:00',  next: '17:00' },
-  { name: 'PowerBI Datasets',  status: 'err',  last: '—',      next: 'Manual' },
-  { name: 'Azure SQL (UAT)',   status: 'ok',   last: '09:00',  next: '21:00' },
-  { name: 'OvalEdge Meta DB',  status: 'ok',   last: '10:00',  next: '22:00' },
+/* ════════════════════════════════════════════════
+   CONNECTOR HEALTH — Google Sheets live fetch
+   Sheet: Overview tab
+   Falls back to placeholder data if sheet is not
+   yet published or fetch fails.
+   ════════════════════════════════════════════════ */
+
+const SHEET_ID   = '1nn9tlhMO4W0c6ho-dlrsHGKjC6WS6HEZ-PEFSTQAEWg';
+const SHEET_NAME = 'Overview';
+const GVIZ_URL   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+
+/* ── Placeholder rows (real OvalEdge data) ──────
+   Used when the sheet hasn't been published yet.
+   Replace with live fetch once you publish the sheet
+   via File → Share → Publish to web.             */
+const CONNECTOR_PLACEHOLDER = [
+  { id: -1,   name: 'MySQL OvalEdge App DB',       type: 'mysql',                status: 'SUCCESS',        validation: 'Validated',         lastCrawled: '06-02-2026 09:28 AM', owner: 'Joshua Daniel',  steward: 'Joshua Daniel',  lineage: false, quality: false, access: false },
+  { id: 1000, name: 'AWS S3 CV Datalake',           type: 's3',                   status: 'KILLED',         validation: 'Validated',         lastCrawled: '04-16-2026 11:51 AM', owner: 'Stanley David',  steward: 'Paulus Sathuri', lineage: false, quality: false, access: false },
+  { id: 1001, name: 'AWS Redshift DW DB',           type: 'redshift',             status: 'SUCCESS',        validation: 'Validated',         lastCrawled: '04-20-2026 03:27 PM', owner: 'Stanley David',  steward: 'Paulus Sathuri', lineage: false, quality: true,  access: false },
+  { id: 1002, name: 'AWS Redshift External Sources',type: 'redshift',             status: 'SUCCESS',        validation: 'Validated',         lastCrawled: '04-20-2026 03:27 PM', owner: 'Stanley David',  steward: 'Paulus Sathuri', lineage: false, quality: true,  access: false },
+  { id: 1006, name: 'Azure OneDrive Alteryx Prod',  type: 'onedrive',             status: 'SUCCESS',        validation: 'Validated',         lastCrawled: '02-09-2026 12:26 PM', owner: 'Stanley David',  steward: 'Paulus Sathuri', lineage: false, quality: false, access: false },
+  { id: 1007, name: 'Alteryx Workflows',            type: 'alteryx',              status: 'SUCCESS',        validation: 'Validated',         lastCrawled: '02-11-2026 12:49 AM', owner: 'Stanley David',  steward: 'Paulus Sathuri', lineage: true,  quality: false, access: false },
+  { id: 1014, name: 'AWS Glue Crawlers',            type: 'awsglueetl',           status: 'SUCCESS',        validation: 'Validated',         lastCrawled: '04-27-2026 02:21 PM', owner: 'Stanley David',  steward: 'Paulus Sathuri', lineage: false, quality: false, access: false },
+  { id: 1021, name: 'HubSpot CV Outreach',          type: 'hubspot',              status: 'PARTIAL SUCCESS',validation: 'Validated',         lastCrawled: '07-08-2025 03:19 PM', owner: 'Joshua Daniel',  steward: 'Joshua Daniel',  lineage: false, quality: true,  access: false },
+  { id: 1025, name: 'Microsoft Power BI',           type: 'powerbi',              status: 'SUCCESS',        validation: 'Validation Error',  lastCrawled: '02-11-2026 03:12 PM', owner: 'Joshua Daniel',  steward: 'Joshua Daniel',  lineage: false, quality: false, access: false },
+  { id: 1026, name: 'Azure SQL Mission DB',         type: 'azuresqlmanagedinstance',status:'SUCCESS',       validation: 'Validation Error',  lastCrawled: '10-09-2025 12:07 PM', owner: 'Joshua Daniel',  steward: 'Joshua Daniel',  lineage: false, quality: false, access: false },
 ];
+
+/* ── Column header → object key map ─────────────
+   Matches your OvalEdge export column names exactly */
+const COL_MAP = {
+  'Connector ID':           'id',
+  'Connection Name':        'name',
+  'Connector Type':         'type',
+  'Status':                 'status',
+  'Validation Status':      'validation',
+  'Last Crawled Date':      'lastCrawled',
+  'Owner':                  'owner',
+  'Steward':                'steward',
+  'Auto Lineage Connector': 'lineage',
+  'Data Quality Connector': 'quality',
+  'Data Access Connector':  'access',
+};
+
+/* ── Parse gviz JSONP response ───────────────── */
+function parseGvizResponse(raw) {
+  // gviz wraps response in: google.visualization.Query.setResponse({...})
+  const json = JSON.parse(raw.replace(/^[^\(]+\(/, '').replace(/\);?\s*$/, ''));
+  const cols  = json.table.cols.map(c => c.label.trim());
+  const rows  = json.table.rows || [];
+
+  return rows.map(row => {
+    const obj = {};
+    cols.forEach((col, i) => {
+      const key = COL_MAP[col];
+      if (!key) return;
+      const cell = row.c[i];
+      let val = cell ? (cell.f || cell.v) : null;
+      // Normalise boolean-ish columns (Yes/No)
+      if (key === 'lineage' || key === 'quality' || key === 'access') {
+        val = (String(val).toLowerCase() === 'yes' || val === true);
+      }
+      obj[key] = val !== null && val !== undefined ? String(val).trim() : '—';
+      // keep booleans as booleans
+      if (key === 'lineage' || key === 'quality' || key === 'access') {
+        obj[key] = (String(val).toLowerCase() === 'yes' || val === true);
+      }
+    });
+    return obj;
+  }).filter(r => r.id); // skip empty rows
+}
+
+/* ── Render connector table ──────────────────── */
+function renderConnectorTable(rows, source) {
+  const tbody   = document.getElementById('connector-tbody');
+  const wrap    = document.getElementById('connector-table-wrap');
+  const loading = document.getElementById('connector-loading');
+  const note    = document.getElementById('connector-source-note');
+  const badges  = document.getElementById('connector-summary-badges');
+
+  const statusCfg = {
+    'SUCCESS':        { cls: 'ok',   dot: 'var(--ok)',   label: 'Success' },
+    'KILLED':         { cls: 'err',  dot: 'var(--err)',  label: 'Killed'  },
+    'PARTIAL SUCCESS':{ cls: 'warn', dot: 'var(--warn)', label: 'Partial' },
+  };
+
+  tbody.innerHTML = rows.map(c => {
+    const s   = statusCfg[c.status] || statusCfg['SUCCESS'];
+    const isKilled  = c.status === 'KILLED';
+    const isPartial = c.status === 'PARTIAL SUCCESS';
+    const isValErr  = c.validation === 'Validation Error';
+    const rowCls = isKilled ? 'row-killed' : (isPartial || isValErr) ? 'row-partial' : '';
+
+    const valHtml = c.validation === 'Validated'
+      ? `<span class="conn-val-ok">&#10003; Valid</span>`
+      : `<span class="conn-val-err">&#9888; Error</span>`;
+
+    const caps = [
+      c.lineage ? `<span class="conn-cap lin">LIN</span>` : '',
+      c.quality ? `<span class="conn-cap dq">DQ</span>`  : '',
+      c.access  ? `<span class="conn-cap da">DA</span>`  : '',
+    ].filter(Boolean).join('');
+
+    return `<tr class="${rowCls}">
+      <td class="conn-id">${c.id}</td>
+      <td>
+        <div style="font-weight:600;font-size:0.78rem;color:var(--text);line-height:1.3;">${c.name || '—'}</div>
+        <div style="font-size:0.65rem;color:var(--text-dim);">${c.type || ''}</div>
+      </td>
+      <td><span class="conn-chip ${s.cls}"><span class="dot" style="background:${s.dot}"></span>${s.label}</span></td>
+      <td>${valHtml}</td>
+      <td style="font-size:0.72rem;color:var(--text-muted);">${c.lastCrawled || '—'}</td>
+      <td style="font-size:0.72rem;">${c.owner || '—'}</td>
+      <td style="font-size:0.72rem;color:var(--text-muted);">${c.steward || '—'}</td>
+      <td><div class="conn-caps">${caps || '<span style="color:var(--text-dim);font-size:0.65rem;">—</span>'}</div></td>
+    </tr>`;
+  }).join('');
+
+  // Summary badges
+  const nSuccess = rows.filter(r => r.status === 'SUCCESS').length;
+  const nPartial = rows.filter(r => r.status === 'PARTIAL SUCCESS').length;
+  const nKilled  = rows.filter(r => r.status === 'KILLED').length;
+  const nValErr  = rows.filter(r => r.validation === 'Validation Error').length;
+  badges.innerHTML = [
+    nSuccess ? `<span class="status-badge ok"><span class="status-dot ok"></span>${nSuccess} ok</span>` : '',
+    nPartial ? `<span class="status-badge warn">${nPartial} partial</span>` : '',
+    nKilled  ? `<span class="status-badge err">${nKilled} killed</span>`    : '',
+    nValErr  ? `<span class="status-badge warn">${nValErr} val.err</span>`  : '',
+  ].join('');
+
+  // Source note
+  note.innerHTML = source === 'live'
+    ? `&#x1F7E2; Live — Google Sheets &middot; ${SHEET_NAME} tab &middot; refreshed ${new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`
+    : `&#x1F7E1; Placeholder data &mdash; <strong>publish the sheet</strong> (File &rarr; Share &rarr; Publish to web) to enable live sync`;
+
+  loading.style.display = 'none';
+  wrap.style.display    = 'block';
+}
+
+/* ── Fetch from Google Sheets ────────────────── */
+async function loadConnectors() {
+  const loadingMsg = document.getElementById('connector-loading-msg');
+
+  try {
+    const res = await fetch(GVIZ_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    if (!text.includes('google.visualization')) throw new Error('Not a gviz response');
+    const rows = parseGvizResponse(text);
+    if (!rows.length) throw new Error('No rows returned');
+    renderConnectorTable(rows, 'live');
+  } catch (err) {
+    // Sheet not published yet — fall back to placeholder
+    console.warn('Sheets fetch failed, using placeholder:', err.message);
+    loadingMsg.textContent = 'Sheet not yet published — showing placeholder data';
+    setTimeout(() => renderConnectorTable(CONNECTOR_PLACEHOLDER, 'placeholder'), 600);
+  }
+}
 
 const CHANGELOG = [
   { type: 'schema',   what: 'Column added: emp_work_country to HR_MASTER',  who: 'J. Menezes', when: '2 Jun' },
@@ -1434,23 +1660,8 @@ function renderMoMChart(activeIdx) {
 }
 
 /* ════════════════════════════════════════════════
-   CONNECTORS
+   CONNECTORS — old simple renderer (replaced)
    ════════════════════════════════════════════════ */
-function renderConnectors() {
-  const list = document.getElementById('connector-list');
-  list.innerHTML = CONNECTORS.map(c => {
-    const dotCls = c.status;
-    const badgeLabel = c.status === 'ok' ? 'Healthy' : c.status === 'warn' ? 'Warning' : 'Error';
-    const progress = c.status === 'ok' ? 92 : c.status === 'warn' ? 55 : 0;
-    const progressCls = c.status === 'ok' ? '' : c.status === 'warn' ? ' warn' : ' err';
-    return `
-      <div class="connector-row">
-        <span class="status-dot ${dotCls}"></span>
-        <span class="connector-name">${c.name}</span>
-        <span class="connector-next">Next: ${c.next}</span>
-      </div>`;
-  }).join('');
-}
 
 /* ════════════════════════════════════════════════
    CHANGELOG
@@ -1491,7 +1702,7 @@ function setLastRefresh() {
    INIT
    ════════════════════════════════════════════════ */
 initTheme();
-renderConnectors();
+loadConnectors();
 renderChangelog();
 setLastRefresh();
 renderMonth(4); // default to May 2026
@@ -1499,4 +1710,3 @@ renderMonth(4); // default to May 2026
 
 </body>
 </html>
-
