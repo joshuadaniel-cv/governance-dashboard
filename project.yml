@@ -1,0 +1,239 @@
+project:
+  name: CV Data Governance Dashboard
+  owner: Joshua Daniel
+  role: Governance Analyst & Data Steward
+  organisation: CVGlobal
+  live_url: https://joshuadaniel-cv.github.io/governance-dashboard/
+  repo: https://github.com/joshuadaniel-cv/governance-dashboard
+  status: draft
+  last_updated: 2026-06-04
+
+# ── Platform ──────────────────────────────────────────────────────────────────
+platform:
+  hosting: GitHub Pages
+  branch: main
+  publish_dir: / (root)
+  ovaledge_version: 7.2.5.3
+  aws_instance: EC2 Ubuntu — Tomcat 9, Java 8
+
+# ── File Structure ────────────────────────────────────────────────────────────
+repo_structure:
+  - path: dev_index.html
+    purpose: Unencrypted dashboard source — edit this
+  - path: index.html
+    purpose: Staticrypt-encrypted output — served live
+  - path: data/
+    purpose: JSON CMS — 9 files, one per dashboard panel
+    files:
+      - config.json
+      - connectors.json
+      - quality.json
+      - anomalies.json
+      - lineage.json
+      - descriptions.json
+      - taxonomy.json
+      - changelog.json
+      - monthly_kpis.json
+  - path: .github/workflows/encrypt.yml
+    purpose: GitHub Action — auto-encrypts on push (pending setup)
+  - path: fonts/
+    purpose: Self-hosted Plus Jakarta Sans (5 weights)
+
+# ── Dashboard Panels ──────────────────────────────────────────────────────────
+dashboard_panels:
+  - id: 1
+    name: Connector Health
+    data_source: data/connectors.json
+    description: >
+      Full-width table of all 10 OvalEdge connectors.
+      Columns: ID, Name/Type, Status chip, Validation,
+      Last Crawled, Owner, Steward, Capabilities (LIN/DQ/DA).
+      Row tinting for KILLED and PARTIAL SUCCESS.
+    connectors_count: 10
+    issues:
+      - id: 1000
+        name: AWS S3 CV Datalake
+        status: KILLED
+      - id: 1021
+        name: HubSpot CV Outreach
+        status: PARTIAL SUCCESS
+      - id: 1025
+        name: Microsoft Power BI
+        validation: Validation Error
+      - id: 1026
+        name: Azure SQL Mission DB
+        validation: Validation Error
+
+  - id: 2
+    name: Data Quality & Anomalies
+    data_source: data/quality.json + data/anomalies.json
+    description: >
+      SVG donut ring showing overall quality score.
+      Four dimension progress bars: Completeness, Accuracy,
+      Uniqueness, Timeliness. Active anomaly alerts below.
+    current_score: 89
+    open_anomalies: 2
+
+  - id: 3
+    name: Data Lineage
+    data_source: data/lineage.json
+    description: >
+      Three stat callouts (assets mapped, coverage %, ETL jobs)
+      with MoM delta badge. Mini SVG lineage flow diagram
+      showing sources → staging → DW.
+    current:
+      assets_mapped: 247
+      coverage_pct: 68
+      etl_jobs: 31
+
+  - id: 4
+    name: Asset Descriptions
+    data_source: data/descriptions.json
+    description: >
+      Business and technical description coverage with
+      progress bars. Warns when below 80%.
+    current:
+      biz_desc_pct: 72
+      tech_desc_pct: 84
+      owner_assigned_pct: 91
+
+  - id: 5
+    name: Tags & Business Terms
+    data_source: data/taxonomy.json
+    description: >
+      Colour-coded classification tag cloud and business
+      glossary term list with approval status badges.
+    tag_count: 11
+    term_count: 4
+
+  - id: 6
+    name: Log of Changes
+    data_source: data/changelog.json
+    description: >
+      Timeline-style audit log. Each entry has type
+      (schema/quality/access/term/classify), description,
+      author, and date. Colour-coded dot per change type.
+    entries: 7
+
+  - id: 7
+    name: Monthly Report (MoM)
+    data_source: data/monthly_kpis.json
+    description: >
+      4 KPI tiles with MoM delta arrows. SVG bar + line
+      combo chart showing asset count and quality score
+      across 5 months. Month navigator (← →) updates
+      all panels simultaneously.
+    months_covered: 5
+    range: 2026-01 to 2026-05
+
+# ── Design System ─────────────────────────────────────────────────────────────
+design:
+  theme: dark (default) / light toggle
+  font: Plus Jakarta Sans (self-hosted)
+  brand_tokens:
+    accent: "#A8FFA3"       # green-light
+    accent_mid: "#5BFF54"   # green-mid
+    accent_dark: "#00C200"  # green-dark
+    background: "#000000"
+    card: "#111111"
+    border: "#222222"
+  layout: bento grid (12-column CSS grid)
+  watermark: DRAFT — 3 levels (page, card, header pill)
+  radius: 12px cards / 8px elements
+
+# ── Authentication ─────────────────────────────────────────────────────────────
+auth:
+  method: Staticrypt (AES-256, client-side)
+  type: Shared passcode
+  remember_days: 7
+  login_style: Paywall overlay — frosted glass card over blurred dashboard
+  button_label: ENTER
+  prompt: Enter passcode to access the dashboard
+  passcode: test   # rotate before production use
+  limitation: >
+    Single shared password — not per-user. No @cvglobal.co
+    enforcement. Upgrade path is Cloudflare Access.
+
+# ── Backend / Data Layer ──────────────────────────────────────────────────────
+backend:
+  type: Static JSON files in repo
+  path: data/
+  fetch: Promise.all() — all 9 files loaded in parallel on page load
+  fallback: Inline hardcoded data if fetch() fails (file:// protocol)
+  editing: GitHub UI (pencil icon) or vi + git push
+  no_re_encrypt_needed: true   # data/ is outside index.html
+  previous_approach: Google Sheets gviz endpoint (abandoned — required publish-to-web)
+
+# ── Scripts ───────────────────────────────────────────────────────────────────
+scripts:
+  - file: setup_data.sh
+    purpose: Creates data/ folder, writes all 9 JSON files, validates, pushes to git
+  - file: test_local.sh
+    purpose: >
+      Validates all 9 JSON files, starts python3 -m http.server,
+      opens browser at http://localhost:8000/dev_index.html
+  - file: patch_login.sh
+    purpose: Applies paywall login styles to Staticrypt index.html
+
+# ── Update Workflow ───────────────────────────────────────────────────────────
+workflows:
+  data_only:
+    steps:
+      - Edit data/*.json via GitHub UI or vi locally
+      - git add data/ && git commit -m "data: ..." && git push origin main
+    note: No re-encryption needed. Live in ~60 seconds.
+
+  html_update:
+    steps:
+      - Edit dev_index.html
+      - staticrypt dev_index.html --password "test" --output index.html
+      - git add index.html dev_index.html
+      - git commit -m "feat: ..."
+      - git push origin main
+
+  local_test:
+    steps:
+      - bash test_local.sh
+      - Open http://localhost:8000/dev_index.html
+      - Verify panels load from data/*.json
+
+# ── Compliance & Standards ────────────────────────────────────────────────────
+compliance:
+  aligned_to:
+    - ISO/IEC 27001:2022 (Annex A controls mapped in Classification Tool)
+    - GDPR (EU) 2016/679
+  classification_tool:
+    url: https://joshuadaniel-cv.github.io/classification-tool/
+    description: >
+      Companion tool — CIA triad scoring, ISO 27001 Annex A
+      mapping, GDPR flagging, markdown documentation output.
+      Shared brand palette with dashboard.
+
+# ── Pending / Next Steps ──────────────────────────────────────────────────────
+pending:
+  - task: Rotate passcode from "test" to production value
+    priority: high
+
+  - task: Confirm GitHub Pages is set to main → /docs or root
+    priority: high
+
+  - task: Set up GitHub Actions encrypt.yml workflow
+    description: Auto-encrypts on push so manual staticrypt step is not needed
+    priority: medium
+
+  - task: Publish Google Sheet (File → Share → Publish to web)
+    description: Originally planned for connector data — superseded by JSON approach
+    priority: low
+
+  - task: Upgrade auth to Cloudflare Access
+    description: Per-user @cvglobal.co Google OAuth — proper access control
+    priority: medium
+
+  - task: Add June 2026 row to monthly_kpis.json, quality.json, lineage.json, descriptions.json
+    priority: medium
+
+  - task: Resolve Power BI and Azure SQL Mission DB validation errors
+    priority: medium
+
+  - task: Resolve AWS S3 CV Datalake KILLED connector
+    priority: high
