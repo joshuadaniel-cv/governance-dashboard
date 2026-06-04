@@ -1,0 +1,44 @@
+[
+  {
+    "date": "2026-06-02",
+    "type": "schema",
+    "description": "Column added: emp_work_country to HR_MASTER",
+    "author": "J. Menezes"
+  },
+  {
+    "date": "2026-06-01",
+    "type": "quality",
+    "description": "Quality rule updated: phone_number format check",
+    "author": "Auto"
+  },
+  {
+    "date": "2026-05-31",
+    "type": "classify",
+    "description": "Dataset classified: Payroll_Q1_2026 → Restricted",
+    "author": "J. Menezes"
+  },
+  {
+    "date": "2026-05-29",
+    "type": "term",
+    "description": "Business term approved: Worker Classification",
+    "author": "DPO"
+  },
+  {
+    "date": "2026-05-28",
+    "type": "access",
+    "description": "Owner assigned: CLIENT_CONTRACTS → Legal team",
+    "author": "Admin"
+  },
+  {
+    "date": "2026-05-26",
+    "type": "schema",
+    "description": "Table deprecated: staging.old_crm_contacts",
+    "author": "ETL Team"
+  },
+  {
+    "date": "2026-05-25",
+    "type": "quality",
+    "description": "Anomaly acknowledged: CRM duplicate keys",
+    "author": "J. Menezes"
+  }
+]

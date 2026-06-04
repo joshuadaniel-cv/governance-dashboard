@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ANO-001",
+    "severity": "high",
+    "dataset": "HR_MASTER",
+    "column": "emp_contract_type",
+    "description": "Null spike: 14.2% null (up from 2.1%)",
+    "detected_at": "2026-06-04T09:00:00",
+    "status": "open"
+  },
+  {
+    "id": "ANO-002",
+    "severity": "medium",
+    "dataset": "SALESFORCE_STAGING",
+    "column": "account_id",
+    "description": "Duplicate keys detected — 317 affected rows",
+    "detected_at": "2026-06-04T03:00:00",
+    "status": "open"
+  }
+]

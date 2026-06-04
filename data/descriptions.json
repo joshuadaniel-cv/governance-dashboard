@@ -1,0 +1,32 @@
+[
+  {
+    "month": "2026-01",
+    "biz_desc_pct": 55,
+    "tech_desc_pct": 70,
+    "owner_assigned_pct": 78
+  },
+  {
+    "month": "2026-02",
+    "biz_desc_pct": 60,
+    "tech_desc_pct": 74,
+    "owner_assigned_pct": 81
+  },
+  {
+    "month": "2026-03",
+    "biz_desc_pct": 64,
+    "tech_desc_pct": 79,
+    "owner_assigned_pct": 85
+  },
+  {
+    "month": "2026-04",
+    "biz_desc_pct": 69,
+    "tech_desc_pct": 82,
+    "owner_assigned_pct": 88
+  },
+  {
+    "month": "2026-05",
+    "biz_desc_pct": 72,
+    "tech_desc_pct": 84,
+    "owner_assigned_pct": 91
+  }
+]

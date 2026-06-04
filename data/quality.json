@@ -1,0 +1,42 @@
+[
+  {
+    "month": "2026-01",
+    "overall": 78,
+    "completeness": 82,
+    "accuracy": 79,
+    "uniqueness": 68,
+    "timeliness": 88
+  },
+  {
+    "month": "2026-02",
+    "overall": 81,
+    "completeness": 85,
+    "accuracy": 82,
+    "uniqueness": 71,
+    "timeliness": 90
+  },
+  {
+    "month": "2026-03",
+    "overall": 84,
+    "completeness": 88,
+    "accuracy": 85,
+    "uniqueness": 74,
+    "timeliness": 92
+  },
+  {
+    "month": "2026-04",
+    "overall": 86,
+    "completeness": 91,
+    "accuracy": 86,
+    "uniqueness": 76,
+    "timeliness": 94
+  },
+  {
+    "month": "2026-05",
+    "overall": 89,
+    "completeness": 93,
+    "accuracy": 88,
+    "uniqueness": 79,
+    "timeliness": 96
+  }
+]

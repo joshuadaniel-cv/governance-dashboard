@@ -1,0 +1,42 @@
+[
+  {
+    "month": "2026-01",
+    "label": "Jan",
+    "assets": 1168,
+    "quality": 78,
+    "issues": 14,
+    "desc_coverage": 58
+  },
+  {
+    "month": "2026-02",
+    "label": "Feb",
+    "assets": 1195,
+    "quality": 81,
+    "issues": 12,
+    "desc_coverage": 63
+  },
+  {
+    "month": "2026-03",
+    "label": "Mar",
+    "assets": 1218,
+    "quality": 84,
+    "issues": 11,
+    "desc_coverage": 67
+  },
+  {
+    "month": "2026-04",
+    "label": "Apr",
+    "assets": 1241,
+    "quality": 86,
+    "issues": 9,
+    "desc_coverage": 71
+  },
+  {
+    "month": "2026-05",
+    "label": "May",
+    "assets": 1284,
+    "quality": 89,
+    "issues": 7,
+    "desc_coverage": 78
+  }
+]

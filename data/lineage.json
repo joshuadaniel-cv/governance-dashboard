@@ -1,0 +1,32 @@
+[
+  {
+    "month": "2026-01",
+    "assets_mapped": 201,
+    "coverage_pct": 52,
+    "etl_jobs": 24
+  },
+  {
+    "month": "2026-02",
+    "assets_mapped": 214,
+    "coverage_pct": 56,
+    "etl_jobs": 26
+  },
+  {
+    "month": "2026-03",
+    "assets_mapped": 224,
+    "coverage_pct": 60,
+    "etl_jobs": 28
+  },
+  {
+    "month": "2026-04",
+    "assets_mapped": 236,
+    "coverage_pct": 64,
+    "etl_jobs": 30
+  },
+  {
+    "month": "2026-05",
+    "assets_mapped": 247,
+    "coverage_pct": 68,
+    "etl_jobs": 31
+  }
+]

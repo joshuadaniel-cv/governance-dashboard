@@ -1,0 +1,21 @@
+{
+  "tags": [
+    { "label": "PII",           "colour": "green"  },
+    { "label": "GDPR · Art.9",  "colour": "green"  },
+    { "label": "Restricted",    "colour": "warn"   },
+    { "label": "Financial",     "colour": "blue"   },
+    { "label": "Internal",      "colour": "blue"   },
+    { "label": "HR",            "colour": "purple" },
+    { "label": "Confidential",  "colour": "green"  },
+    { "label": "Legal",         "colour": "purple" },
+    { "label": "Analytics",     "colour": "blue"   },
+    { "label": "Sensitive",     "colour": "warn"   },
+    { "label": "Public",        "colour": "green"  }
+  ],
+  "terms": [
+    { "name": "Worker Classification",    "status": "Approved" },
+    { "name": "Gross Contractor Spend",   "status": "Approved" },
+    { "name": "Client Engagement Score",  "status": "Draft"    },
+    { "name": "Data Quality Index",       "status": "Review"   }
+  ]
+}
