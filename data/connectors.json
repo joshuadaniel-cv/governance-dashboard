@@ -8,7 +8,7 @@
     "last_crawled": "06-02-2026 09:28 AM",
     "owner": "Joshua Daniel",
     "steward": "Joshua Daniel",
-    "lineage": false,
+
     "quality": false,
     "access": false
   },
@@ -21,7 +21,7 @@
     "last_crawled": "04-16-2026 11:51 AM",
     "owner": "Stanley David",
     "steward": "Paulus Sathuri",
-    "lineage": false,
+
     "quality": false,
     "access": false
   },
@@ -34,7 +34,7 @@
     "last_crawled": "04-20-2026 03:27 PM",
     "owner": "Stanley David",
     "steward": "Paulus Sathuri",
-    "lineage": false,
+
     "quality": true,
     "access": false
   },
@@ -46,8 +46,7 @@
     "validation": "Validated",
     "last_crawled": "04-20-2026 03:27 PM",
     "owner": "Stanley David",
-    "steward": "Paulus Sathuri",
-    "lineage": false,
+
     "quality": true,
     "access": false
   },
