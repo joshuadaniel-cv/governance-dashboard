@@ -1,0 +1,245 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1020" width="800" height="1020" font-family="'Plus Jakarta Sans', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </linearGradient>
+
+    <!-- Accent glow -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="softglow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Card bg -->
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#181818"/>
+      <stop offset="100%" stop-color="#111111"/>
+    </linearGradient>
+
+    <!-- Green shimmer -->
+    <linearGradient id="greenLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#A8FFA3" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#A8FFA3" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#5BFF54" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#5BFF54" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="timelineGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8FFA3" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#A8FFA3" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <clipPath id="roundCard">
+      <rect x="40" y="110" width="720" height="870" rx="16"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="1020" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid texture -->
+  <g opacity="0.03">
+    <line x1="0" y1="100" x2="800" y2="100" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="0" y1="200" x2="800" y2="200" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="0" y1="300" x2="800" y2="300" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="0" y1="400" x2="800" y2="400" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="0" y1="500" x2="800" y2="500" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="0" y1="600" x2="800" y2="600" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="0" y1="700" x2="800" y2="700" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="0" y1="800" x2="800" y2="800" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="0" y1="900" x2="800" y2="900" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="100" y1="0" x2="100" y2="1020" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="200" y1="0" x2="200" y2="1020" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="300" y1="0" x2="300" y2="1020" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="400" y1="0" x2="400" y2="1020" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="500" y1="0" x2="500" y2="1020" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="600" y1="0" x2="600" y2="1020" stroke="#A8FFA3" stroke-width="0.5"/>
+    <line x1="700" y1="0" x2="700" y2="1020" stroke="#A8FFA3" stroke-width="0.5"/>
+  </g>
+
+  <!-- Top glow orb -->
+  <ellipse cx="400" cy="-20" rx="300" ry="100" fill="#A8FFA3" opacity="0.04"/>
+
+  <!-- ── HEADER ── -->
+  <!-- CVGlobal logo path -->
+  <g transform="translate(40, 28) scale(0.038)" opacity="0.9">
+    <path d="m1168.42 233.05c-13.36 0-26.18 5.31-35.63 14.76l-140 140c-11.49 11.49-26.77 17.82-43.03 17.82s-31.53-6.33-43.03-17.82l-107.98-107.98c-30.17-30.17-70.28-46.78-112.95-46.78h-333.37c-63.1 0-116.92 48.98-119.3 112.03-2.5 66.29 50.7 121.02 116.44 121.02h388.1l-45.61-45.61c-9.51-9.51-22.41-14.85-35.86-14.85h-304.98c-29.18 0-54.72-21.61-57.45-50.66-3.14-33.33 23.11-61.46 55.8-61.46h336.23c26.33 0 51.58 10.46 70.2 29.08l106.19 106.19c22.22 22.22 51.81 36.15 83.22 37.24 34.02 1.18 66.2-11.52 90.13-35.46l197.51-197.51h-64.63z" fill="#A8FFA3"/>
+  </g>
+
+  <!-- Title -->
+  <text x="93" y="48" font-size="17" font-weight="800" fill="#FFFFFF" letter-spacing="-0.5">Data Governance Dashboard</text>
+  <text x="93" y="64" font-size="11" fill="#666666" letter-spacing="0.2">CVGlobal · Work Summary · June 2026</text>
+
+  <!-- DRAFT pill -->
+  <rect x="648" y="30" width="68" height="22" rx="11" fill="rgba(251,191,36,0.1)" stroke="rgba(251,191,36,0.3)" stroke-width="1"/>
+  <text x="682" y="45" font-size="9.5" font-weight="700" fill="#FBBF24" text-anchor="middle" letter-spacing="1">DRAFT</text>
+
+  <!-- Green shimmer line under header -->
+  <rect x="0" y="78" width="800" height="1" fill="url(#greenLine)" opacity="0.6"/>
+
+  <!-- ── MAIN CARD ── -->
+  <rect x="40" y="95" width="720" height="890" rx="14" fill="url(#cardGrad)" stroke="#222222" stroke-width="1"/>
+
+  <!-- Card inner top accent -->
+  <rect x="40" y="95" width="720" height="2" rx="1" fill="url(#greenLine)" opacity="0.4"/>
+
+  <!-- ── SECTION: What was built ── -->
+  <text x="72" y="132" font-size="9" font-weight="700" fill="#A8FFA3" letter-spacing="2" text-anchor="start">WHAT WAS BUILT</text>
+  <rect x="72" y="137" width="36" height="1.5" rx="1" fill="#A8FFA3" opacity="0.6"/>
+
+  <!-- Timeline line -->
+  <line x1="96" y1="155" x2="96" y2="590" stroke="url(#timelineGrad)" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+  <!-- ── ITEM 1: Dashboard ── -->
+  <circle cx="96" cy="162" r="6" fill="#A8FFA3" filter="url(#glow)"/>
+  <circle cx="96" cy="162" r="3" fill="#000"/>
+  <text x="118" y="159" font-size="13" font-weight="700" fill="#FFFFFF">Governance Dashboard (index.html)</text>
+  <text x="118" y="175" font-size="10.5" fill="#777777">Single-page bento-grid layout · CVGlobal brand tokens · dark/light theme</text>
+
+  <!-- Sub bullets 1 -->
+  <circle cx="132" cy="193" r="2.5" fill="#444"/>
+  <text x="142" y="197" font-size="10" fill="#888888">7 panels: Connector Health, Quality, Lineage, Descriptions, Tags, Changelog, MoM Report</text>
+  <circle cx="132" cy="210" r="2.5" fill="#444"/>
+  <text x="142" y="214" font-size="10" fill="#888888">Month navigator — click ← → to update all panels simultaneously</text>
+  <circle cx="132" cy="227" r="2.5" fill="#444"/>
+  <text x="142" y="231" font-size="10" fill="#888888">SVG bar + line MoM chart · quality score donut ring · lineage flow diagram</text>
+  <circle cx="132" cy="244" r="2.5" fill="#444"/>
+  <text x="142" y="248" font-size="10" fill="#888888">DRAFT watermark at page, card, and header pill level</text>
+
+  <!-- ── ITEM 2: Connector Table ── -->
+  <circle cx="96" cy="272" r="6" fill="#A8FFA3" filter="url(#glow)"/>
+  <circle cx="96" cy="272" r="3" fill="#000"/>
+  <text x="118" y="269" font-size="13" font-weight="700" fill="#FFFFFF">Connector Health Table</text>
+  <text x="118" y="285" font-size="10.5" fill="#777777">Replaced simple row list with structured 8-column table</text>
+
+  <circle cx="132" cy="303" r="2.5" fill="#444"/>
+  <text x="142" y="307" font-size="10" fill="#888888">10 real OvalEdge connectors from your export (IDs −1, 1000–1026)</text>
+  <circle cx="132" cy="320" r="2.5" fill="#444"/>
+  <text x="142" y="324" font-size="10" fill="#888888">Status chips: SUCCESS / KILLED / PARTIAL SUCCESS with row tinting</text>
+  <circle cx="132" cy="337" r="2.5" fill="#444"/>
+  <text x="142" y="341" font-size="10" fill="#888888">Validation Error flagged on Power BI and Azure SQL Mission DB</text>
+  <circle cx="132" cy="354" r="2.5" fill="#444"/>
+  <text x="142" y="358" font-size="10" fill="#888888">LIN / DQ / DA capability badges per connector</text>
+
+  <!-- ── ITEM 3: Google Sheets integration ── -->
+  <circle cx="96" cy="382" r="6" fill="#60A5FA" filter="url(#glow)"/>
+  <circle cx="96" cy="382" r="3" fill="#000"/>
+  <text x="118" y="379" font-size="13" font-weight="700" fill="#FFFFFF">Google Sheets Live Fetch</text>
+  <text x="118" y="395" font-size="10.5" fill="#777777">Connector table driven by Google Sheets · Overview tab · no API key needed</text>
+
+  <circle cx="132" cy="413" r="2.5" fill="#444"/>
+  <text x="142" y="417" font-size="10" fill="#888888">gviz endpoint — works once sheet is published (File → Share → Publish to web)</text>
+  <circle cx="132" cy="430" r="2.5" fill="#444"/>
+  <text x="142" y="434" font-size="10" fill="#888888">Column header → object key mapping via COL_MAP (tolerant of missing columns)</text>
+  <circle cx="132" cy="447" r="2.5" fill="#444"/>
+  <text x="142" y="451" font-size="10" fill="#888888">Graceful fallback to placeholder data with yellow status note</text>
+
+  <!-- ── ITEM 4: Staticrypt ── -->
+  <circle cx="96" cy="475" r="6" fill="#FBBF24" filter="url(#glow)"/>
+  <circle cx="96" cy="475" r="3" fill="#000"/>
+  <text x="118" y="472" font-size="13" font-weight="700" fill="#FFFFFF">Password Protection via Staticrypt</text>
+  <text x="118" y="488" font-size="10.5" fill="#777777">AES-256 encryption at build time · shared team password · 7-day remember</text>
+
+  <circle cx="132" cy="506" r="2.5" fill="#444"/>
+  <text x="142" y="510" font-size="10" fill="#888888">npm install -g staticrypt · single-line encrypt command</text>
+  <circle cx="132" cy="523" r="2.5" fill="#444"/>
+  <text x="142" y="527" font-size="10" fill="#888888">GitHub Actions workflow encrypts automatically on every push to main</text>
+  <circle cx="132" cy="540" r="2.5" fill="#444"/>
+  <text x="142" y="544" font-size="10" fill="#888888">Password stored as GitHub repo secret (DASHBOARD_PASSWORD)</text>
+
+  <!-- ── ITEM 5: Repo structure ── -->
+  <circle cx="96" cy="568" r="6" fill="#A78BFA" filter="url(#glow)"/>
+  <circle cx="96" cy="568" r="3" fill="#000"/>
+  <text x="118" y="565" font-size="13" font-weight="700" fill="#FFFFFF">Repo Structure &amp; Deployment</text>
+  <text x="118" y="581" font-size="10.5" fill="#777777">joshuadaniel-cv/governance-dashboard · GitHub Pages</text>
+
+  <!-- ── DIVIDER ── -->
+  <rect x="72" y="606" width="656" height="1" fill="#222"/>
+
+  <!-- ── SECTION: Repo layout ── -->
+  <text x="72" y="630" font-size="9" font-weight="700" fill="#A8FFA3" letter-spacing="2">REPO LAYOUT</text>
+  <rect x="72" y="635" width="36" height="1.5" rx="1" fill="#A8FFA3" opacity="0.6"/>
+
+  <!-- File tree box -->
+  <rect x="72" y="648" width="300" height="168" rx="8" fill="#0d0d0d" stroke="#1e1e1e" stroke-width="1"/>
+  <text x="92" y="668" font-size="10" fill="#555" font-family="'SF Mono', 'Consolas', monospace">governance-dashboard/</text>
+  <text x="92" y="685" font-size="10" fill="#666" font-family="'SF Mono', 'Consolas', monospace">├── <tspan fill="#A8FFA3">dev_index.html</tspan>   ← edit this</text>
+  <text x="92" y="701" font-size="10" fill="#666" font-family="'SF Mono', 'Consolas', monospace">├── docs/</text>
+  <text x="92" y="717" font-size="10" fill="#666" font-family="'SF Mono', 'Consolas', monospace">│   └── <tspan fill="#60A5FA">index.html</tspan>   ← served live</text>
+  <text x="92" y="733" font-size="10" fill="#666" font-family="'SF Mono', 'Consolas', monospace">├── .github/workflows/</text>
+  <text x="92" y="749" font-size="10" fill="#666" font-family="'SF Mono', 'Consolas', monospace">│   └── <tspan fill="#FBBF24">encrypt.yml</tspan></text>
+  <text x="92" y="765" font-size="10" fill="#666" font-family="'SF Mono', 'Consolas', monospace">├── .staticrypt.json</text>
+  <text x="92" y="781" font-size="10" fill="#666" font-family="'SF Mono', 'Consolas', monospace">└── README.md</text>
+  <text x="92" y="800" font-size="9" fill="#444" font-family="'SF Mono', 'Consolas', monospace">Pages: main → /docs</text>
+
+  <!-- ── SECTION: Update workflow ── -->
+  <text x="400" y="630" font-size="9" font-weight="700" fill="#A8FFA3" letter-spacing="2">UPDATE WORKFLOW</text>
+  <rect x="400" y="635" width="36" height="1.5" rx="1" fill="#A8FFA3" opacity="0.6"/>
+
+  <!-- Workflow steps -->
+  <!-- Step 1 -->
+  <rect x="400" y="648" width="22" height="22" rx="6" fill="rgba(168,255,163,0.1)" stroke="rgba(168,255,163,0.3)" stroke-width="1"/>
+  <text x="411" y="663" font-size="11" font-weight="700" fill="#A8FFA3" text-anchor="middle">1</text>
+  <text x="432" y="657" font-size="11" font-weight="600" fill="#FFFFFF">Edit dev_index.html</text>
+  <text x="432" y="671" font-size="10" fill="#666">Make changes to the dashboard source</text>
+
+  <line x1="411" y1="671" x2="411" y2="690" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+
+  <!-- Step 2 -->
+  <rect x="400" y="690" width="22" height="22" rx="6" fill="rgba(96,165,250,0.1)" stroke="rgba(96,165,250,0.3)" stroke-width="1"/>
+  <text x="411" y="705" font-size="11" font-weight="700" fill="#60A5FA" text-anchor="middle">2</text>
+  <text x="432" y="699" font-size="11" font-weight="600" fill="#FFFFFF">Encrypt to docs/</text>
+  <text x="432" y="713" font-size="10" fill="#666">staticrypt dev_index.html --output docs/index.html</text>
+
+  <line x1="411" y1="713" x2="411" y2="732" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+
+  <!-- Step 3 -->
+  <rect x="400" y="732" width="22" height="22" rx="6" fill="rgba(251,191,36,0.1)" stroke="rgba(251,191,36,0.3)" stroke-width="1"/>
+  <text x="411" y="747" font-size="11" font-weight="700" fill="#FBBF24" text-anchor="middle">3</text>
+  <text x="432" y="741" font-size="11" font-weight="600" fill="#FFFFFF">git add · commit · push</text>
+  <text x="432" y="755" font-size="10" fill="#666">git push origin main</text>
+
+  <line x1="411" y1="755" x2="411" y2="774" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+
+  <!-- Step 4 -->
+  <rect x="400" y="774" width="22" height="22" rx="6" fill="rgba(167,139,250,0.1)" stroke="rgba(167,139,250,0.3)" stroke-width="1"/>
+  <text x="411" y="789" font-size="11" font-weight="700" fill="#A78BFA" text-anchor="middle">4</text>
+  <text x="432" y="783" font-size="11" font-weight="600" fill="#FFFFFF">GitHub Actions deploys</text>
+  <text x="432" y="797" font-size="10" fill="#666">Live at joshuadaniel-cv.github.io/governance-dashboard</text>
+
+  <!-- ── DIVIDER ── -->
+  <rect x="72" y="832" width="656" height="1" fill="#222"/>
+
+  <!-- ── PENDING / NEXT STEPS ── -->
+  <text x="72" y="856" font-size="9" font-weight="700" fill="#FBBF24" letter-spacing="2">PENDING</text>
+  <rect x="72" y="861" width="36" height="1.5" rx="1" fill="#FBBF24" opacity="0.6"/>
+
+  <g transform="translate(72, 875)">
+    <!-- Item 1 -->
+    <rect x="0" y="0" width="8" height="8" rx="2" fill="rgba(251,191,36,0.15)" stroke="rgba(251,191,36,0.4)" stroke-width="1"/>
+    <text x="16" y="9" font-size="10.5" fill="#CCCCCC">Publish Google Sheet (File → Share → Publish to web) to enable live connector data</text>
+
+    <!-- Item 2 -->
+    <rect x="0" y="22" width="8" height="8" rx="2" fill="rgba(251,191,36,0.15)" stroke="rgba(251,191,36,0.4)" stroke-width="1"/>
+    <text x="16" y="31" font-size="10.5" fill="#CCCCCC">Confirm GitHub Pages is set to main → /docs</text>
+
+    <!-- Item 3 -->
+    <rect x="0" y="44" width="8" height="8" rx="2" fill="rgba(251,191,36,0.15)" stroke="rgba(251,191,36,0.4)" stroke-width="1"/>
+    <text x="16" y="53" font-size="10.5" fill="#CCCCCC">Consider Cloudflare Access for per-user @cvglobal.co auth (long-term)</text>
+
+    <!-- Item 4 -->
+    <rect x="0" y="66" width="8" height="8" rx="2" fill="rgba(251,191,36,0.15)" stroke="rgba(251,191,36,0.4)" stroke-width="1"/>
+    <text x="16" y="75" font-size="10.5" fill="#CCCCCC">Connect remaining 6 dashboard panels to live data sources</text>
+  </g>
+
+  <!-- ── FOOTER ── -->
+  <rect x="0" y="990" width="800" height="1" fill="url(#greenLine)" opacity="0.3"/>
+  <text x="400" y="1008" font-size="9.5" fill="#444" text-anchor="middle">CV Data Governance Dashboard · joshuadaniel-cv.github.io/governance-dashboard · June 2026</text>
+</svg>
