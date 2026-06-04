@@ -1,7 +1,7 @@
 [
   {
     "id": -1,
-    "name": "MySQL OvalEdge App DB",
+    "name": "MySQL OvalEdge  DB",
     "type": "mysql",
     "status": "SUCCESS",
     "validation": "Validated",
